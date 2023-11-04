@@ -8,6 +8,8 @@ namespace GitHubLike.Modules.RoleModule.Repository
 
         Task<Roles> GetRole(long roleId);
 
+        Task<IQueryable<Roles>> GetRolesByUser(long userId);
+
         Task<int> UpdateRole(Roles role);
 
         Task<int> DeleteRole(Roles role);

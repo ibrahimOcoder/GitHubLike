@@ -1,9 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GitHubLike.Modules.WorkspaceModule.Entity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GitHubLike.Modules.Common.Entity
 {
-    public abstract class EntityBase  {
+
+    public interface IEntityBase {}
+
+    public abstract class EntityBase : IEntityBase
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
@@ -15,5 +20,15 @@ namespace GitHubLike.Modules.Common.Entity
         public bool? SoftDeleted { get; set; } = false;
 
         public long? UpdatedBy { get; set; }
+    }
+
+    public abstract class EntityBaseWithWorkspace : EntityBase
+    {
+        
+        [Required] 
+        public Workspace Workspace { get; set; }
+
+        [Required]
+        public long WorkspaceId { get; set; }
     }
 }

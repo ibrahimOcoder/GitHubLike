@@ -6,7 +6,7 @@ using GitHubLike.Modules.WorkspaceModule.Entity;
 namespace GitHubLike.Modules.UserModule.Entity
 {
     [Table("UserModule_User")]
-    public class User : EntityBase
+    public class User : EntityBaseWithWorkspace
     {
         [Required] 
         public string UserName { get; set; }
@@ -18,10 +18,5 @@ namespace GitHubLike.Modules.UserModule.Entity
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required] 
-        public Workspace Workspace { get; set; }
-
-        [Required]
-        public long WorkspaceId { get; set; }
     }
 }

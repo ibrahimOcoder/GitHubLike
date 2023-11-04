@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using GitHubLike.Modules.Common.Entity;
 using GitHubLike.Modules.RoleModule.Types;
+using GitHubLike.Modules.UserModule.Entity;
 
 namespace GitHubLike.Modules.RoleModule.Entity
 {
@@ -14,5 +15,10 @@ namespace GitHubLike.Modules.RoleModule.Entity
 
         [Required]
         public Permissions Permissions { get; set; }
+
+        [Required] 
+        public long CreatedByUserId { get; set; }
+
+        public User CreatedBy { get; set; }
     }
 }

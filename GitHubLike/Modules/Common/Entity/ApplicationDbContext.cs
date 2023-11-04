@@ -19,7 +19,7 @@ namespace GitHubLike.Modules.Common.Entity
             base.OnModelCreating(modelBuilder);
 
             var entityTypes = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(type => typeof(EntityBase).IsAssignableFrom(type) && !type.IsAbstract);
+                .Where(type => typeof(IEntityBase).IsAssignableFrom(type) && !type.IsAbstract);
 
             foreach (var entityType in entityTypes)
             {

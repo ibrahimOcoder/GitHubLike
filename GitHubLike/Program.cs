@@ -20,10 +20,21 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 
 builder.Services.AddControllers();
 
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(300);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseSession();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

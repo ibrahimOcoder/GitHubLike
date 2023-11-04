@@ -20,8 +20,6 @@
     <Folder Include="Modules\Organization\Controllers\" />
     <Folder Include="Modules\Organization\Mappings\" />
     <Folder Include="Modules\Organization\Models\" />
-    <Folder Include="Modules\Project\Controllers\" />
-    <Folder Include="Modules\Project\Entity\" />
     <Folder Include="Modules\Project\Mappings\" />
     <Folder Include="Modules\Project\Models\" />
     <Folder Include="Modules\UserModule\Controllers\" />

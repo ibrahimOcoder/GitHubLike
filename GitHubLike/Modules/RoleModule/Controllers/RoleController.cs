@@ -48,6 +48,30 @@ namespace GitHubLike.Modules.RoleModule.Controllers
             return Ok(roleEntity);
         }
 
+        [HttpGet("/GetRolesByUserId/{id}")]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.Created, Type = typeof(RoleViewDto))]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public async Task<ActionResult> GetRolesByUserId(long id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var roleEntities = await _rolesService.GetRolesByUser(id);
+
+            if (roleEntities == null)
+            {
+                return NotFound();
+            }
+
+            var roleViewDtos = _mapper.Map<IEnumerable<RoleViewDto>>(roleEntities);
+
+            return Ok(roleViewDtos);
+        }
+
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -55,12 +79,20 @@ namespace GitHubLike.Modules.RoleModule.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Post([FromBody] RoleCreateDto createDto)
         {
+            long? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
             if (createDto == null)
             {
                 return BadRequest();
             }
 
             var roleEntity = _mapper.Map<Roles>(createDto);
+            roleEntity.CreatedByUserId = (long)userId;
+
             await _rolesService.AddRole(roleEntity);
 
             var roleViewDto = _mapper.Map<RoleViewDto>(roleEntity);

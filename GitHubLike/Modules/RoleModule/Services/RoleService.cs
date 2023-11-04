@@ -26,6 +26,11 @@ namespace GitHubLike.Modules.RoleModule.Services
             return await _roleRepository.Query().SingleOrDefaultAsync(r => r.Id == roleId);
         }
 
+        public async Task<IQueryable<Roles>> GetRolesByUser(long userId)
+        {
+            return _roleRepository.Query().Where(r => r.CreatedByUserId == userId).AsNoTracking();
+        }
+
         public async Task<int> UpdateRole(Roles role)
         {
             _roleRepository.Update(role);
