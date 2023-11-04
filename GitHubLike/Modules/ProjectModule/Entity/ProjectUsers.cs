@@ -4,7 +4,7 @@ using GitHubLike.Modules.RoleModule.Entity;
 using GitHubLike.Modules.UserModule.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace GitHubLike.Modules.Project.Entity
+namespace GitHubLike.Modules.ProjectModule.Entity
 {
     [Table("ProjectModule_ProjectUsers")]
     [PrimaryKey(nameof(UserId), nameof(ProjectId), nameof(RoleId))]
@@ -21,5 +21,7 @@ namespace GitHubLike.Modules.Project.Entity
         public long RoleId { get; set; }
 
         public List<Roles> Roles { get; set; }
+
+        public bool AcceptedInvite { get; set; }
     }
 }

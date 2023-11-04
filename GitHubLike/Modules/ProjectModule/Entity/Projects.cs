@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using GitHubLike.Modules.Common.Entity;
 
-namespace GitHubLike.Modules.Project.Entity
+namespace GitHubLike.Modules.ProjectModule.Entity
 {
     [Table("ProjectModule_Project")]
     public class Projects : EntityBaseWithWorkspace
@@ -15,5 +15,7 @@ namespace GitHubLike.Modules.Project.Entity
         public int OwnerTypeId { get; set; }
 
         public List<OwnerType> OwnerTypes { get; set; }
+
+        public int OwnerId { get; set; }
     }
 }

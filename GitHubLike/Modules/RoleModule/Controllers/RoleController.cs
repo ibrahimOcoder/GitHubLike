@@ -51,7 +51,7 @@ namespace GitHubLike.Modules.RoleModule.Controllers
         [HttpGet("/GetRolesByUserId/{id}")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int) HttpStatusCode.Created, Type = typeof(RoleViewDto))]
+        [ProducesResponseType((int) HttpStatusCode.Created, Type = typeof(IEnumerable<RoleViewDto>))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<ActionResult> GetRolesByUserId(long id)
         {
@@ -128,6 +128,9 @@ namespace GitHubLike.Modules.RoleModule.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult> Delete(long id)
         {
             if (id == 0)
