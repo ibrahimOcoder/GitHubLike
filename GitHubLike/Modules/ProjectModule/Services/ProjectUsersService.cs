@@ -14,9 +14,9 @@ namespace GitHubLike.Modules.ProjectModule.Services
             _projectUsersRepository = projectUsersRepository;
         }
 
-        public Task<ProjectUsers> GetProjectUser(long userId, long projectId)
+        public async Task<ProjectUsers> GetProjectUser(long userId, long projectId)
         {
-            return _projectUsersRepository.Query()
+            return await _projectUsersRepository.Query()
                 .FirstOrDefaultAsync(p => p.UserId == userId && p.ProjectId == projectId);
         }
 

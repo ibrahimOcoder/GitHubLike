@@ -9,6 +9,10 @@ namespace GitHubLike.Modules.ProjectModule.Mappings
         public ProjectUsersMappingProfile()
         {
             CreateMap<ProjectUserCreateDto, ProjectUsers>();
+
+            CreateMap<ProjectUserUpdateDto, ProjectUsers>();
+
+            CreateMap<ProjectUserDeleteDto, ProjectUsers>();
         }
     }
 }

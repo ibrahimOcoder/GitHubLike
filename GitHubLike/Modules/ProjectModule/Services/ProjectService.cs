@@ -38,11 +38,11 @@ namespace GitHubLike.Modules.ProjectModule.Services
             return _projectRepository.Query().Join(_projectUsersRepository.Query().Where(p => p.UserId == userId && p.AcceptedInvite == false), 
                 projects => projects.Id,
                 projectUsers => projectUsers.ProjectId,
-                (projects, projectUsers) => new ProjectUserInvitationsViewDto()
+                (projects, projectUsers) => new ProjectUserInvitationsViewDto
                 {
                     InviteAccepted = projectUsers.AcceptedInvite,
                     Project = new ProjectViewDto { ProjectId = projects.Id, ProjectName = projects.ProjectName }
-                });
+                }).AsNoTracking();
         }
 
         public async Task<IQueryable<ProjectViewDto>> GetProjectsByOrganizationandUser(long organizationId, long userId)

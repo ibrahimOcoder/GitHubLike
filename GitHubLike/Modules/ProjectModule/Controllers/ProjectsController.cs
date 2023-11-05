@@ -67,18 +67,40 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
             return Ok(projectViewDtos);
         }
 
+        [HttpGet("/GetSharedProjectsByUserId/{id}")]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(IQueryable<ProjectUserInvitationsViewDto>))]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public async Task<ActionResult> GetSharedProjectsByUserId([FromBody] long id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var projects = await _projectService.GetProjectsByOwnerWithInvitations(id);
+
+            if (projects == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(projects);
+        }
+
         [HttpPatch("{id}")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> Patch([FromBody]long id, [FromBody] ProjectUpdateDto updateDto)
+        public async Task<ActionResult> Patch([FromBody] ProjectUpdateDto updateDto)
         {
             if (updateDto == null)
             {
                 return BadRequest();
             }
 
-            var project = await _projectService.GetProject(id);
+            var project = await _projectService.GetProject(updateDto.ProjectId);
 
             if (project == null)
             {

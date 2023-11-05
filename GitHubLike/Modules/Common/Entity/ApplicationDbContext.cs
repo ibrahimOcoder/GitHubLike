@@ -1,13 +1,5 @@
-﻿using GitHubLike.Modules.WorkspaceModule.Entity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using GitHubLike.Modules.Common.Repository;
-using System.Diagnostics;
-using GitHubLike.Modules.Common.Helpers;
-using GitHubLike.Modules.Organization.Entity;
-using GitHubLike.Modules.RoleModule.Entity;
-using GitHubLike.Modules.UserModule.Entity;
-using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GitHubLike.Modules.Common.Entity
 {
@@ -27,6 +19,11 @@ namespace GitHubLike.Modules.Common.Entity
                 var genericMethod = method.MakeGenericMethod(entityType);
                 genericMethod.Invoke(modelBuilder, null);
             }
+
+            //modelBuilder.Entity<Workspace>().HasData(
+            //    new Workspace {WorkspaceName = "Workspace 1"},
+            //    new Workspace {WorkspaceName = "Workspace 2"}
+            //);
         }
     }
 }

@@ -1,24 +1,23 @@
-﻿using System.Net;
-using AutoMapper;
-using GitHubLike.Modules.ProjectModule.Entity;
-using GitHubLike.Modules.ProjectModule.Models;
-using GitHubLike.Modules.ProjectModule.Repository;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using GitHubLike.Modules.OrganizationModule.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using GitHubLike.Modules.OrganizationModule.Entity;
+using GitHubLike.Modules.OrganizationModule.Models;
 
-namespace GitHubLike.Modules.ProjectModule.Controllers
+namespace GitHubLike.Modules.OrganizationModule.Controllers
 {
-    [Route("api/projectUsers")]
+    [Route("api/organizationUser")]
     [ApiController]
-    public class ProjectUsersController : ControllerBase
+    public class OrganizationUserController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IProjectUsersService _projectUsersService;
+        private readonly IOrganizationUserService _organizationUserService;
 
-        public ProjectUsersController(IMapper mapper, IProjectUsersService projectUsersService)
+        public OrganizationUserController(IMapper mapper, IOrganizationUserService organizationUserService)
         {
             _mapper = mapper;
-            _projectUsersService = projectUsersService;
+            _organizationUserService = organizationUserService;
         }
 
         [HttpPost]
@@ -26,16 +25,16 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> AddProjectUser([FromBody] ProjectUserCreateDto createDto)
+        public async Task<ActionResult> AddProjectUser([FromBody] OrganizationUserCreateDto createDto)
         {
             if (createDto == null)
             {
                 return BadRequest();
             }
 
-            var projectUser = _mapper.Map<ProjectUsers>(createDto);
+            var projectUser = _mapper.Map<OrganizationUsers>(createDto);
 
-            var result = _projectUsersService.AddProjectUser(projectUser);
+            var result = _organizationUserService.AddOrganizationUser(projectUser);
 
             if (await result > 0)
             {
@@ -50,17 +49,17 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> UpdateProjectUser([FromBody] ProjectUserUpdateDto updateDto)
+        public async Task<ActionResult> UpdateProjectUser([FromBody] OrganizationUserUpdateDto updateDto)
         {
             if (updateDto == null)
             {
                 return BadRequest();
             }
 
-            var projectUser = await _projectUsersService.GetProjectUser(updateDto.UserId, updateDto.ProjectId);
-            projectUser.RoleId = updateDto.RoleId;
+            var organizationUser = await _organizationUserService.GetOrganizationUser(updateDto.UserId, updateDto.OrganizationId);
+            organizationUser.OrganizationRoleId = updateDto.OrganizationRoleId;
 
-            var result = _projectUsersService.UpdateProjectUserRole(projectUser);
+            var result = _organizationUserService.UpdateOrganizationUser(organizationUser);
 
             if (await result > 0)
             {
@@ -74,21 +73,21 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> Delete([FromBody] ProjectUserDeleteDto deleteDto)
+        public async Task<ActionResult> Delete([FromBody] OrganizationUserDeleteDto deleteDto)
         {
             if (deleteDto == null)
             {
                 return BadRequest();
             }
 
-            var projectUser = await _projectUsersService.GetProjectUser(deleteDto.UserId, deleteDto.ProjectId);
-
-            if (projectUser == null)
+            var organization = await _organizationUserService.GetOrganizationUser(deleteDto.UserId, deleteDto.OrganizationId);
+            
+            if (organization == null)
             {
                 return NotFound();
             }
 
-            long delete = await _projectUsersService.DeleteProjectUser(projectUser);
+            long delete = await _organizationUserService.DeleteOrganizationUser(organization);
 
             if (delete > 0)
             {

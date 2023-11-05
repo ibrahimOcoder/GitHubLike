@@ -2,6 +2,8 @@ using System.Reflection;
 using GitHubLike.Modules.Common.Entity;
 using GitHubLike.Modules.Common.Helpers;
 using GitHubLike.Modules.Common.Repository;
+using GitHubLike.Modules.ProjectModule.Repository;
+using GitHubLike.Modules.ProjectModule.Services;
 using GitHubLike.Modules.RoleModule.Repository;
 using GitHubLike.Modules.RoleModule.Services;
 using GitHubLike.Modules.WorkspaceModule.Repository;
@@ -17,6 +19,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IProjectUsersService, ProjectUsersService>();
 
 builder.Services.AddControllers();
 
