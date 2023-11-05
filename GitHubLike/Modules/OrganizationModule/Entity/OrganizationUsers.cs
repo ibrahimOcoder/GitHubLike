@@ -1,15 +1,13 @@
-﻿using GitHubLike.Modules.ProjectModule.Entity;
-using GitHubLike.Modules.RoleModule.Entity;
-using GitHubLike.Modules.UserModule.Entity;
+﻿using GitHubLike.Modules.UserModule.Entity;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GitHubLike.Modules.Common.Entity;
 
 namespace GitHubLike.Modules.OrganizationModule.Entity
 {
     [Table("OrganizationModule_OrganizationUsers")]
     [PrimaryKey(nameof(UserId), nameof(OrganizationId), nameof(OrganizationRoleId))]
-    public class OrganizationUsers
+    public class OrganizationUsers : IEntityBase
     {
         public long UserId { get; set; }
 
