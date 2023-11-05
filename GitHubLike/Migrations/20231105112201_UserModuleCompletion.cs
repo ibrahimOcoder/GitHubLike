@@ -42,7 +42,7 @@ namespace GitHubLike.Migrations
                 column: "OwnerUserId",
                 principalTable: "UserModule_User",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         /// <inheritdoc />
