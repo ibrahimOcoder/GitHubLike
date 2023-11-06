@@ -12,15 +12,15 @@ namespace GitHubLike.Modules.ProjectModule.Entity
     {
         public long UserId { get; set; }
 
-        public List<User> Users { get; set; }
+        public User Users { get; set; }
 
         public long ProjectId { get; set; }
 
-        public List<Projects> Projects { get; set; }
+        public Projects Projects { get; set; }
 
         public long RoleId { get; set; }
 
-        public List<Roles> Roles { get; set; }
+        public Roles Roles { get; set; }
 
         public bool AcceptedInvite { get; set; }
     }

@@ -9,7 +9,7 @@ namespace GitHubLike.Modules.OrganizationModule.Entity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrganizationRoleId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]

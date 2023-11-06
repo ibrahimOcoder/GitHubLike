@@ -57,7 +57,7 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
             }
 
             var organizationUser = await _organizationUserService.GetOrganizationUser(updateDto.UserId, updateDto.OrganizationId);
-            organizationUser.OrganizationRoleId = updateDto.OrganizationRoleId;
+            organizationUser.OrgRoleId = updateDto.OrganizationRoleId;
 
             var result = _organizationUserService.UpdateOrganizationUser(organizationUser);
 

@@ -4,6 +4,7 @@ using GitHubLike.Modules.Common.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GitHubLike.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106071908_OrganizationUsers")]
+    partial class OrganizationUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,11 +53,11 @@ namespace GitHubLike.Migrations
 
             modelBuilder.Entity("GitHubLike.Modules.OrganizationModule.Entity.OrganizationRoles", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrganizationRoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrganizationRoleId"));
 
                     b.Property<string>("OrganizationRoleName")
                         .IsRequired()
@@ -64,7 +67,7 @@ namespace GitHubLike.Migrations
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrganizationRoleId");
 
                     b.ToTable("OrganizationModule_OrganizationRoles");
                 });
@@ -77,20 +80,20 @@ namespace GitHubLike.Migrations
                     b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("OrgRoleId")
+                    b.Property<long>("OrganizationRoleId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("AcceptedInvite")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OrganizationRoleId")
+                    b.Property<int>("OrganizationRoleId1")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "OrganizationId", "OrgRoleId");
+                    b.HasKey("UserId", "OrganizationId", "OrganizationRoleId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.HasIndex("OrganizationRoleId");
+                    b.HasIndex("OrganizationRoleId1");
 
                     b.ToTable("OrganizationModule_OrganizationUsers");
                 });
@@ -149,17 +152,7 @@ namespace GitHubLike.Migrations
                     b.Property<bool>("AcceptedInvite")
                         .HasColumnType("bit");
 
-                    b.Property<long>("ProjectsId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RolesId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("UserId", "ProjectId", "RoleId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.HasIndex("RolesId");
 
                     b.ToTable("ProjectModule_ProjectUsers");
                 });
@@ -186,6 +179,15 @@ namespace GitHubLike.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<long?>("ProjectUsersProjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProjectUsersRoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProjectUsersUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool?>("SoftDeleted")
                         .HasColumnType("bit");
 
@@ -201,6 +203,8 @@ namespace GitHubLike.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("WorkspaceId");
+
+                    b.HasIndex("ProjectUsersUserId", "ProjectUsersProjectId", "ProjectUsersRoleId");
 
                     b.ToTable("ProjectModule_Project");
                 });
@@ -225,6 +229,15 @@ namespace GitHubLike.Migrations
                     b.Property<int>("Permissions")
                         .HasColumnType("int");
 
+                    b.Property<long?>("ProjectUsersProjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProjectUsersRoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProjectUsersUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("RoleName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -243,6 +256,8 @@ namespace GitHubLike.Migrations
 
                     b.HasIndex("CreatedById");
 
+                    b.HasIndex("ProjectUsersUserId", "ProjectUsersProjectId", "ProjectUsersRoleId");
+
                     b.ToTable("RoleModule_Roles");
                 });
 
@@ -260,6 +275,15 @@ namespace GitHubLike.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ProjectUsersProjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProjectUsersRoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProjectUsersUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool?>("SoftDeleted")
                         .HasColumnType("bit");
@@ -284,6 +308,8 @@ namespace GitHubLike.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("WorkspaceId");
+
+                    b.HasIndex("ProjectUsersUserId", "ProjectUsersProjectId", "ProjectUsersRoleId");
 
                     b.ToTable("UserModule_User");
                 });
@@ -335,7 +361,7 @@ namespace GitHubLike.Migrations
 
                     b.HasOne("GitHubLike.Modules.OrganizationModule.Entity.OrganizationRoles", "OrganizationRole")
                         .WithMany()
-                        .HasForeignKey("OrganizationRoleId")
+                        .HasForeignKey("OrganizationRoleId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -371,33 +397,6 @@ namespace GitHubLike.Migrations
                     b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("GitHubLike.Modules.ProjectModule.Entity.ProjectUsers", b =>
-                {
-                    b.HasOne("GitHubLike.Modules.ProjectModule.Entity.Projects", "Projects")
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GitHubLike.Modules.RoleModule.Entity.Roles", "Roles")
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GitHubLike.Modules.UserModule.Entity.User", "Users")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Projects");
-
-                    b.Navigation("Roles");
-
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("GitHubLike.Modules.ProjectModule.Entity.Projects", b =>
                 {
                     b.HasOne("GitHubLike.Modules.WorkspaceModule.Entity.Workspace", "Workspace")
@@ -405,6 +404,10 @@ namespace GitHubLike.Migrations
                         .HasForeignKey("WorkspaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("GitHubLike.Modules.ProjectModule.Entity.ProjectUsers", null)
+                        .WithMany("Projects")
+                        .HasForeignKey("ProjectUsersUserId", "ProjectUsersProjectId", "ProjectUsersRoleId");
 
                     b.Navigation("Workspace");
                 });
@@ -417,6 +420,10 @@ namespace GitHubLike.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GitHubLike.Modules.ProjectModule.Entity.ProjectUsers", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("ProjectUsersUserId", "ProjectUsersProjectId", "ProjectUsersRoleId");
+
                     b.Navigation("CreatedBy");
                 });
 
@@ -428,7 +435,20 @@ namespace GitHubLike.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GitHubLike.Modules.ProjectModule.Entity.ProjectUsers", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ProjectUsersUserId", "ProjectUsersProjectId", "ProjectUsersRoleId");
+
                     b.Navigation("Workspace");
+                });
+
+            modelBuilder.Entity("GitHubLike.Modules.ProjectModule.Entity.ProjectUsers", b =>
+                {
+                    b.Navigation("Projects");
+
+                    b.Navigation("Roles");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("GitHubLike.Modules.ProjectModule.Entity.Projects", b =>

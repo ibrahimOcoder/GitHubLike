@@ -1,0 +1,23 @@
+1. 3 Users.
+2. User Custom Roles : 2 roles for each -> 6
+3. User Projects : 4 projects for each -> 12
+4. Shared projects : 2 shared project for each -> 6
+5. Organizations : 1 for each -> 3
+6. Organization User management:
+	- Organization 1:
+		> User 1 -> Owner.
+		> User 2 -> Admin.
+		> User 3 -> Member.
+		> Projects -> 2
+	
+	- Organization 2:
+		> User 2 -> Owner.
+		> User 1 -> Admin.
+		> User 3 -> Member.
+		> Projects -> 2
+		
+	- Organization 3:
+		> User 3 -> Owner.
+		> User 1 -> Admin.
+		> User 2 -> Member.
+		> Projects -> 2
