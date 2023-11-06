@@ -10,9 +10,8 @@ else {
 
 Import-Module sqlserver
 
-$serverName = "DESKTOP-IB"
+$serverName = (Get-Content appsettings.json | ConvertFrom-Json).ConnectionStrings.ServerName
 $databaseName = "GitHubLike"
-
 $server = New-Object Microsoft.SqlServer.Management.Smo.Server($serverName)
 
 if ($server.Databases.Contains($databaseName)) {
@@ -22,7 +21,7 @@ if ($server.Databases.Contains($databaseName)) {
     Write-Host "Database $databaseName does not exist."
 }
 
-$connectionString = "Server=DESKTOP-IB;Initial Catalog=GitHubLike;Persist Security Info=False;User ID=sa;Password=systematic;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30"
+$connectionString = (Get-Content appsettings.json | ConvertFrom-Json).ConnectionStrings.DefaultConnection
 
 Write-Host "Applying Migrations and seeding data..."
 dotnet ef database update --project "../GitHubLike" --context "GitHubLike.Modules.Common.Entity.ApplicationDbContext" --connection $connectionString

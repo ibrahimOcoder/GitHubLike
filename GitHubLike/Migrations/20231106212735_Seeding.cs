@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GitHubLike.Migrations
 {
     /// <inheritdoc />
-    public partial class DbSeederMigration : Migration
+    public partial class Seeding : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            DbSeeder dbSeeder = new();
-            dbSeeder.SeedData();
+            DbSeeder seeder = new DbSeeder();
+            seeder.SeedData();
         }
 
         /// <inheritdoc />

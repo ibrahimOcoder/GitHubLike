@@ -1,6 +1,9 @@
 using GitHubLike.Modules.Common.Entity;
 using GitHubLike.Modules.Common.Helpers;
 using GitHubLike.Modules.Common.Repository;
+using GitHubLike.Modules.Common.Services;
+using GitHubLike.Modules.OrganizationModule.Repository;
+using GitHubLike.Modules.OrganizationModule.Services;
 using GitHubLike.Modules.ProjectModule.Repository;
 using GitHubLike.Modules.ProjectModule.Services;
 using GitHubLike.Modules.RoleModule.Repository;
@@ -16,16 +19,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+// TODO: move these DIs their respective modules somehow to have less code here for maintainability and more loose coupling:
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IProjectUsersService, ProjectUsersService>();
+builder.Services.AddScoped<IOrganizationService, OrganizationService>();
+builder.Services.AddScoped<IOrganizationUserService, OrganizationUserService>();
+
+//DbSeeder seeder = new DbSeeder();
+//seeder.SeedData();
 
 builder.Services.AddControllers();
-
-
 builder.Services.AddDistributedMemoryCache();
-
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(300);

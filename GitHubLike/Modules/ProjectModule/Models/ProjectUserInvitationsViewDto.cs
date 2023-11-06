@@ -4,6 +4,6 @@
     {
         public ProjectViewDto Project { get; set; }
 
-        public bool InviteAccepted { get; set; }
+        public bool? InviteAccepted { get; set; }
     }
 }

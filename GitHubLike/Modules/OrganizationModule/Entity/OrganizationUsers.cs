@@ -21,6 +21,6 @@ namespace GitHubLike.Modules.OrganizationModule.Entity
 
         public OrganizationRoles OrganizationRole { get; set; }
 
-        public bool AcceptedInvite { get; set; }
+        public bool? AcceptedInvite { get; set; } = null;
     }
 }

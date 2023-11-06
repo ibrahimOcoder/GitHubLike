@@ -9,12 +9,14 @@ namespace GitHubLike.Modules.OrganizationModule.Entity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [MaxLength(50)]
         public string OrganizationRoleName { get; set; }
 
         public bool SoftDeleted { get; set; } = false;
+
+        public ICollection<OrganizationUsers> OrganizationUsers { get; set; }
     }
 }

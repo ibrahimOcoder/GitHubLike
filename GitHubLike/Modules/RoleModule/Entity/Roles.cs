@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using GitHubLike.Modules.Common.Entity;
+using GitHubLike.Modules.ProjectModule.Entity;
 using GitHubLike.Modules.RoleModule.Types;
 using GitHubLike.Modules.UserModule.Entity;
 
@@ -20,5 +21,7 @@ namespace GitHubLike.Modules.RoleModule.Entity
         public long CreatedByUserId { get; set; }
 
         public User CreatedBy { get; set; }
+
+        public ICollection<ProjectUsers> ProjectUsers { get; set; }
     }
 }

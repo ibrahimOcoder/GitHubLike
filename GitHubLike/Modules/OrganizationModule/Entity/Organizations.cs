@@ -17,5 +17,7 @@ namespace GitHubLike.Modules.OrganizationModule.Entity
 
         [Required]
         public long OwnerUserId { get; set; }
+
+        public ICollection<OrganizationUsers> OrganizationUsers { get; set; }
     }
 }

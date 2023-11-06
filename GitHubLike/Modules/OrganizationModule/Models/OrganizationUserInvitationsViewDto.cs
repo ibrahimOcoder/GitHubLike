@@ -4,6 +4,6 @@
     {
         public OrganizationViewDto Organization { get; set; }
 
-        public bool InviteAccepted { get; set; }
+        public bool? InviteAccepted { get; set; }
     }
 }

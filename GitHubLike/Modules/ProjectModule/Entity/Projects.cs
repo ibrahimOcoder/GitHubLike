@@ -5,7 +5,7 @@ using GitHubLike.Modules.Common.Entity;
 namespace GitHubLike.Modules.ProjectModule.Entity
 {
     [Table("ProjectModule_Project")]
-    public class Projects : EntityBaseWithWorkspace
+    public class Projects : EntityBase
     {
         [Required]
         [MaxLength(50)]
@@ -14,8 +14,10 @@ namespace GitHubLike.Modules.ProjectModule.Entity
         [Required] 
         public int OwnerTypeId { get; set; }
 
-        public List<OwnerType> OwnerTypes { get; set; }
+        public OwnerType OwnerTypes { get; set; }
 
         public int OwnerId { get; set; }
+
+        public ICollection<ProjectUsers> ProjectUsers { get; set; }
     }
 }

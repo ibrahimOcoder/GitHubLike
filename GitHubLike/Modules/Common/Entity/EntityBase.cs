@@ -17,7 +17,7 @@ namespace GitHubLike.Modules.Common.Entity
 
         public DateTimeOffset? UpdatedAt { get; protected set; }
 
-        public bool? SoftDeleted { get; set; } = false;
+        public bool SoftDeleted { get; set; } = false;
 
         public long? UpdatedBy { get; set; }
     }
