@@ -4,8 +4,8 @@
     public enum Permissions
     {
         Create = 1,
-        Retrieve,
-        Update,
-        Delete,
+        Retrieve = 2,
+        Update = 4,
+        Delete = 8,
     }
 }

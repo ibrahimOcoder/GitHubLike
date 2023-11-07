@@ -23,12 +23,12 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
             _organizationService = organizationService;
         }
 
-        [HttpGet("/GetSharedOrganizationsByUserId/{id}")]
+        [HttpGet("GetSharedOrganizationsByUserId")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(IQueryable<OrganizationUserInvitationsViewDto>))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public async Task<ActionResult> GetSharedOrganizationsByUserId([FromBody] long id)
+        public async Task<ActionResult> GetSharedOrganizationsByUserId([FromQuery] long id)
         {
             if (id == 0)
             {

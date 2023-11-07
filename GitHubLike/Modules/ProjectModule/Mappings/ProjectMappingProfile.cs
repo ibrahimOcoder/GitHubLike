@@ -8,7 +8,8 @@ namespace GitHubLike.Modules.ProjectModule.Mappings
     {
         public ProjectMappingProfile()
         {
-            CreateMap<Projects, ProjectViewDto>();
+            CreateMap<Projects, ProjectViewDto>()
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateOnly.FromDateTime(src.CreatedAt.Date)));
         }
     }
 }

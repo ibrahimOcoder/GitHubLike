@@ -1,1 +1,15 @@
-<p>list works!</p>
+<nb-layout>
+  <nb-layout-column>
+    <nb-card [ngClass]="{ greyed: greyedOut === null }">
+      <nb-card-body class="example-items-rows">
+        {{ mainTitle }}
+      </nb-card-body>
+      <nb-card-body class="example-items-rows">
+        {{ createdBy }}
+      </nb-card-body>
+      <nb-card-body class="example-items-rows">
+        {{ extraText }}
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>

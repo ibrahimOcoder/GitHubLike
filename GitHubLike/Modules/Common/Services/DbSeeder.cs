@@ -146,7 +146,7 @@ namespace GitHubLike.Modules.Common.Services
                         OwnerId = (int)user.Id,
                         OwnerTypeId = userOwner.OwnerTypeId,
                         OwnerTypes = userOwner,
-                        ProjectName = "Project " + i
+                        ProjectName = "Project " + i + " of User: " + user.Id
                     });
                 }
 
@@ -227,12 +227,6 @@ namespace GitHubLike.Modules.Common.Services
                     RoleId = userRole[index].Id,
                     Roles = userRole[index]
                 });
-
-                
-                if (index == sharedToUsers.Count)
-                {
-                    
-                }
             }
 
             _dbContext.Set<ProjectUsers>().AddRange(sharedProjects);
@@ -280,7 +274,7 @@ namespace GitHubLike.Modules.Common.Services
                         OwnerId = (int)organization.Id,
                         OwnerTypeId = organizationOwner.OwnerTypeId,
                         OwnerTypes = organizationOwner,
-                        ProjectName = "Organization " + organization.Id + "Project " + i
+                        ProjectName = "Organization " + organization.Id + " Project " + i
                     });
                 }
             }

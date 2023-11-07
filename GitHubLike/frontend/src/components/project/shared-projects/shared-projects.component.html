@@ -1,1 +1,10 @@
-<p>shared-projects works!</p>
+<ng-container *ngLet="state$ | async; let sharedProjects">
+  <div *ngFor="let sharedProject of sharedProjects" class="listDiv">
+    <app-list
+      [mainTitle]="sharedProject?.project?.projectName"
+      [createdBy]="sharedProject?.userName"
+      [extraText]="sharedProject?.project?.createdAt"
+      [greyedOut]="sharedProject?.inviteAccepted"
+    ></app-list>
+  </div>
+</ng-container>

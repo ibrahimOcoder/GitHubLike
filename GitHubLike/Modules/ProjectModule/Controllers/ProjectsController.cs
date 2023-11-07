@@ -43,12 +43,12 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
             return Ok(projectViewDto);
         }
 
-        [HttpGet("/GetProjectsByUserId/{id}")]
+        [HttpGet("GetProjectsByUserId")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(IEnumerable<ProjectViewDto>))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public async Task<ActionResult> GetProjectsByUserId([FromBody] long id)
+        public async Task<ActionResult> GetProjectsByUserId([FromQuery] long id)
         {
             if (id == 0)
             {
@@ -67,12 +67,12 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
             return Ok(projectViewDtos);
         }
 
-        [HttpGet("/GetSharedProjectsByUserId/{id}")]
+        [HttpGet("GetSharedProjectsByUserId")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(IQueryable<ProjectUserInvitationsViewDto>))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public async Task<ActionResult> GetSharedProjectsByUserId([FromBody] long id)
+        public async Task<ActionResult> GetSharedProjectsByUserId([FromQuery] long id)
         {
             if (id == 0)
             {

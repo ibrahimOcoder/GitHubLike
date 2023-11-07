@@ -5,5 +5,7 @@
         public OrganizationViewDto Organization { get; set; }
 
         public bool? InviteAccepted { get; set; }
+
+        public string UserName { get; set; }
     }
 }

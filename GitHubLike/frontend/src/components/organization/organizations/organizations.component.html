@@ -1,1 +1,10 @@
-<p>organizations works!</p>
+<ng-container *ngLet="state$ | async; let organizations">
+  <div *ngFor="let organization of organizations" class="listDiv">
+    <app-list
+      [mainTitle]="organization?.organization?.organizationName"
+      [createdBy]="organization?.userName"
+      [extraText]="organization?.organization?.createdAt"
+      [greyedOut]="organization?.inviteAccepted"
+    ></app-list>
+  </div>
+</ng-container>

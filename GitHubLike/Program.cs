@@ -45,6 +45,11 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseSession();
+app.UseCors(builder => builder
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowAnyOrigin()
+);
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

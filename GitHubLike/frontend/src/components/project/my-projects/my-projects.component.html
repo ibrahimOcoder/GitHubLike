@@ -1,1 +1,8 @@
-<p>my-projects works!</p>
+<ng-container *ngLet="state$ | async; let myProjects">
+  <div *ngFor="let myProject of myProjects" class="listDiv">
+    <app-list
+      [mainTitle]="myProject.projectName"
+      [extraText]="myProject.createdAt"
+    ></app-list>
+  </div>
+</ng-container>

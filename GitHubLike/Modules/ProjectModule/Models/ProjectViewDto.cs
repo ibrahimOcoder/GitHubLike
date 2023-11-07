@@ -5,5 +5,7 @@
         public long ProjectId { get; set; }
 
         public string ProjectName { get; set; }
+
+        public DateOnly CreatedAt { get; set; }
     }
 }

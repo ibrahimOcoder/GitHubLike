@@ -11,5 +11,7 @@ namespace GitHubLike.Modules.RoleModule.Models
         [Required] 
         public Permissions Permissions { get; set; }
 
+        public int UserId { get; set; }
+
     }
 }
