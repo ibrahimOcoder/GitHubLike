@@ -22,3 +22,5 @@ The Frontend has been developed using **Angular 16**. Following are some key pat
   2.  Usage of **PNPM** instead of NPM for faster installations, deduplication (avoiding multiple copies of same package) and strict mode by which we can not have multiple versions of the same             package.
   3.  **SCAM pattern** has been used to segregate components and provide clear responsbility and dependency.
   4.  **Dependency Injection** has also been used.
+  5.  Integration of **Nebular** components. (See: https://akveo.github.io/nebular/docs/getting-started/what-is-nebular)
+  6.  **Future:** Stories of components can be created using **Storybook**s for better understanding of UI flows. (See: https://storybook.js.org/tutorials/intro-to-storybook/angular/en/get-started/)
