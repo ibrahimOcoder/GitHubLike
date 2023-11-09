@@ -7,12 +7,14 @@ using System.Net;
 using GitHubLike.Modules.RoleModule.Entity;
 using GitHubLike.Modules.RoleModule.Models;
 using GitHubLike.Modules.WorkspaceModule.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GitHubLike.Modules.RoleModule.Controllers
 {
+    [Authorize]
     [Route("api/role")]
     [ApiController]
     public class RoleController : ControllerBase

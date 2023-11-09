@@ -1,0 +1,21 @@
+<nb-layout>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-body class="example-items-rows">
+        User Email: <input nbInput #email />
+      </nb-card-body>
+      <nb-card-body class="example-items-rows">
+        Password: <input nbInput #password type="password" />
+      </nb-card-body>
+      <nb-card-body class="example-items-rows">
+        <button
+          nbButton
+          status="primary"
+          (click)="login(email.value, password.value)"
+        >
+          Login
+        </button>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>

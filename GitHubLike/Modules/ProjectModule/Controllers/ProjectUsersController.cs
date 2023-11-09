@@ -3,10 +3,12 @@ using AutoMapper;
 using GitHubLike.Modules.ProjectModule.Entity;
 using GitHubLike.Modules.ProjectModule.Models;
 using GitHubLike.Modules.ProjectModule.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GitHubLike.Modules.ProjectModule.Controllers
 {
+    [Authorize]
     [Route("api/projectUsers")]
     [ApiController]
     public class ProjectUsersController : ControllerBase

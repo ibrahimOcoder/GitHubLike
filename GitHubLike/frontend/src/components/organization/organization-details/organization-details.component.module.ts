@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { NbTabsetModule } from '@nebular/theme';
+import { MasterComponentModule } from 'src/components/master/master.component.module';
 import { OrganizationUsersComponentModule } from '../organization-users/organization-users.component.module';
 import { OrganizationDetailsComponent } from './organization-details.component';
 
 @NgModule({
-  imports: [NbTabsetModule, OrganizationUsersComponentModule],
+  imports: [
+    NbTabsetModule,
+    OrganizationUsersComponentModule,
+    MasterComponentModule,
+  ],
   declarations: [OrganizationDetailsComponent],
   exports: [OrganizationDetailsComponent],
 })

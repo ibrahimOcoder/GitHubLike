@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using GitHubLike.Modules.OrganizationModule.Repository;
-using GitHubLike.Modules.ProjectModule.Models;
-using GitHubLike.Modules.ProjectModule.Repository;
-using GitHubLike.Modules.ProjectModule.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using GitHubLike.Modules.OrganizationModule.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GitHubLike.Modules.OrganizationModule.Controllers
 {
+    [Authorize]
     [Route("api/organization")]
     [ApiController]
     public class OrganizationController : ControllerBase

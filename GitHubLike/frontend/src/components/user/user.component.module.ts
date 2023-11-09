@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NbDialogService, NbTabsetModule } from '@nebular/theme';
+import { MasterComponentModule } from '../master/master.component.module';
 import { OrganizationComponentModule } from '../organization/organizations/organizations.component.module';
 import { MyProjectsComponentModule } from '../project/my-projects/my-projects.component.module';
 import { SharedProjectsComponentModule } from '../project/shared-projects/shared-projects.moodule';
@@ -14,6 +15,7 @@ import { UserComponent } from './user.component';
     MyProjectsComponentModule,
     SharedProjectsComponentModule,
     OrganizationComponentModule,
+    MasterComponentModule,
   ],
   exports: [UserComponent],
   providers: [NbDialogService],

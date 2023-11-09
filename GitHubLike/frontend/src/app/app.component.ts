@@ -7,8 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'GitHub';
   constructor(private router: Router) {
-    this.router.navigate(['user']);
+    if (localStorage.getItem('currentUser')) {
+      this.router.navigate(['user']);
+    } else {
+      this.router.navigate(['login']);
+    }
   }
 }

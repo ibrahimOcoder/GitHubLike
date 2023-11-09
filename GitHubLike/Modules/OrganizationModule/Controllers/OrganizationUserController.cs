@@ -5,9 +5,11 @@ using System.Net;
 using GitHubLike.Modules.OrganizationModule.Entity;
 using GitHubLike.Modules.OrganizationModule.Models;
 using OrganizationRoles = GitHubLike.Modules.OrganizationModule.Types.OrganizationRoles;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GitHubLike.Modules.OrganizationModule.Controllers
 {
+    [Authorize]
     [Route("api/organizationUser")]
     [ApiController]
     public class OrganizationUserController : ControllerBase

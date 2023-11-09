@@ -2,10 +2,12 @@
 using AutoMapper;
 using GitHubLike.Modules.WorkspaceModule.Models;
 using GitHubLike.Modules.WorkspaceModule.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GitHubLike.Modules.WorkspaceModule.Controllers
 {
+    [Authorize]
     [Route("api/workspace")]
     [ApiController]
     public class WorkspaceController : ControllerBase
