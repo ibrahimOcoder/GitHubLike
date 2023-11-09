@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RxState } from '@rx-angular/state';
+import { ProjectUserUpdateDto } from 'src/models/projects/sharedprojects/SharedProjectsPatchDto';
 import { SharedProjectsViewDto } from 'src/models/projects/sharedprojects/SharedProjectsViewDto';
 import { SharedProjectsApiService } from './shared-projects.api.service';
 
@@ -25,6 +26,23 @@ export class SharedProjectsComponent {
       this.sharedProjectsService.getSharedProjects(1),
       (_, sharedProjects) => {
         return sharedProjects;
+      },
+    );
+  }
+
+  rejectInvitation(projectId: number) {
+    const rejectInvitation: ProjectUserUpdateDto = {
+      projectId: projectId,
+      userId: 1,
+      acceptedInvite: false,
+    };
+
+    this.state.hold(
+      this.sharedProjectsService.rejectInvitation(rejectInvitation),
+      (resp) => {
+        if (resp) {
+          this.state.set({ sharedProjects: resp });
+        }
       },
     );
   }

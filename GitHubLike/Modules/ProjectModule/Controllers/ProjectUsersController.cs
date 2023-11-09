@@ -3,7 +3,6 @@ using AutoMapper;
 using GitHubLike.Modules.ProjectModule.Entity;
 using GitHubLike.Modules.ProjectModule.Models;
 using GitHubLike.Modules.ProjectModule.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GitHubLike.Modules.ProjectModule.Controllers
@@ -51,7 +50,7 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IQueryable<ProjectUserInvitationsViewDto>))]
         public async Task<ActionResult> UpdateProjectUser([FromBody] ProjectUserUpdateDto updateDto)
         {
             if (updateDto == null)
@@ -60,13 +59,20 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
             }
 
             var projectUser = await _projectUsersService.GetProjectUser(updateDto.UserId, updateDto.ProjectId);
-            projectUser.RoleId = updateDto.RoleId;
 
-            var result = _projectUsersService.UpdateProjectUserRole(projectUser);
-
-            if (await result > 0)
+            if (updateDto.RoleId > 0)
             {
-                return Ok();
+                projectUser.RoleId = updateDto.RoleId;    
+            }
+            
+            projectUser.AcceptedInvite = updateDto.AcceptedInvite;
+
+            var result = await _projectUsersService.UpdateProjectUserRole(projectUser);
+
+            if (result > 0)
+            {
+                var projectInvites = await _projectService.GetProjectsByOwnerWithInvitations(updateDto.UserId);
+                return Ok(projectInvites);
             }
 
             return Conflict();
@@ -76,6 +82,7 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProjectDetailViewDto))]
         public async Task<ActionResult> Delete([FromBody] ProjectUserDeleteDto deleteDto)
         {
             if (deleteDto == null)
@@ -94,7 +101,7 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
 
             if (delete > 0)
             {
-                var projectUsers = _projectService.GetProjectDetails(deleteDto.ProjectId);
+                var projectUsers = await _projectService.GetProjectDetails(deleteDto.ProjectId);
                 return Ok(projectUsers);
             }
 

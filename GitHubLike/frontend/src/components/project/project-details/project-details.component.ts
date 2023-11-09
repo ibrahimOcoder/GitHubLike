@@ -47,7 +47,6 @@ export class ProjectDetailsComponent implements OnInit {
     this.state.hold(
       this.projectDetailsService.removeProjectUser(removeUserDto),
       (resp) => {
-        console.log(resp);
         if (resp) {
           this.state.set({ projectDetails: resp });
         }

@@ -7,5 +7,7 @@
         public long ProjectId { get; set; }
 
         public long RoleId { get; set; }
+
+        public bool AcceptedInvite { get; set; }
     }
 }

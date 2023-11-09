@@ -5,6 +5,14 @@
       [createdBy]="sharedProject?.userName"
       [extraText]="sharedProject?.project?.createdAt"
       [greyedOut]="sharedProject?.inviteAccepted"
-    ></app-list>
+    >
+      <button
+        nbButton
+        status="danger"
+        (click)="rejectInvitation(sharedProject.project.projectId)"
+      >
+        Reject Invitation
+      </button>
+    </app-list>
   </div>
 </ng-container>
