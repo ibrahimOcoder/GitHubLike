@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environment';
 import { DeleteOrganizationUserDto } from 'src/models/organizations/DeleteOrganizationUserDto';
 import { OrganizationDetailsViewDto } from 'src/models/organizations/OrganizationDetailViewDto';
+import { OrganizationUserUpdateDto } from 'src/models/organizations/OrganizationUserPatchDto';
 
 @Injectable()
 export class OrganizationDetailsApiService {
@@ -21,6 +22,18 @@ export class OrganizationDetailsApiService {
       environment.apiUrl + 'organization',
       {
         params: params,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      },
+    );
+  }
+
+  patchOrganizationUser(
+    updateDto: OrganizationUserUpdateDto,
+  ): Observable<OrganizationDetailsViewDto> {
+    return this.httpClient.patch<OrganizationDetailsViewDto>(
+      environment.apiUrl + 'organizationUser',
+      updateDto,
+      {
         headers: { 'Access-Control-Allow-Origin': '*' },
       },
     );

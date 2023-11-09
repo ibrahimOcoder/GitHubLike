@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using GitHubLike.Modules.OrganizationModule.Entity;
 using GitHubLike.Modules.OrganizationModule.Models;
+using OrganizationRoles = GitHubLike.Modules.OrganizationModule.Types.OrganizationRoles;
 
 namespace GitHubLike.Modules.OrganizationModule.Controllers
 {
@@ -50,7 +51,7 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(OrganizationDetailViewDto))]
         public async Task<ActionResult> UpdateProjectUser([FromBody] OrganizationUserUpdateDto updateDto)
         {
             if (updateDto == null)
@@ -59,13 +60,35 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
             }
 
             var organizationUser = await _organizationUserService.GetOrganizationUser(updateDto.UserId, updateDto.OrganizationId);
-            organizationUser.OrgRoleId = updateDto.OrganizationRoleId;
-
-            var result = _organizationUserService.UpdateOrganizationUser(organizationUser);
-
-            if (await result > 0)
+            OrganizationRoles newRole;
+            OrganizationRoles.TryParse(updateDto.RoleName, true, out newRole);
+            if (newRole == null)
             {
-                return Ok();
+                return BadRequest();
+            }
+
+            else
+            {
+                if (newRole == OrganizationRoles.Admin)
+                {
+                    newRole = OrganizationRoles.Member;
+                }
+
+                else
+                {
+                    newRole = OrganizationRoles.Admin;
+                }
+            }
+
+            organizationUser.OrgRoleId = (int)newRole;
+
+            var result = await _organizationUserService.UpdateOrganizationUser(organizationUser);
+
+            if (result > 0)
+            {
+                var organizationUsers =
+                    await _organizationService.GetOrganizationDetail(updateDto.OrganizationId, updateDto.UserId);
+                return Ok(organizationUsers);
             }
 
             return Conflict();
@@ -75,6 +98,7 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(OrganizationDetailViewDto))]
         public async Task<ActionResult> Delete([FromBody] OrganizationUserDeleteDto deleteDto)
         {
             if (deleteDto == null)

@@ -6,6 +6,6 @@
 
         public long UserId { get; set; }
 
-        public long OrganizationRoleId { get; set; }
+        public string RoleName { get; set; } = "";
     }
 }

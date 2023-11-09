@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GitHubLike.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231106212735_Seeding")]
-    partial class Seeding
+    [Migration("20231109201749_FixedCompositeKeys")]
+    partial class FixedCompositeKeys
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,13 +75,13 @@ namespace GitHubLike.Migrations
                     b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("OrgRoleId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool?>("AcceptedInvite")
                         .HasColumnType("bit");
 
-                    b.HasKey("UserId", "OrganizationId", "OrgRoleId");
+                    b.Property<long>("OrgRoleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("UserId", "OrganizationId");
 
                     b.HasIndex("OrgRoleId");
 
@@ -138,13 +138,13 @@ namespace GitHubLike.Migrations
                     b.Property<long>("ProjectId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool?>("AcceptedInvite")
                         .HasColumnType("bit");
 
-                    b.HasKey("UserId", "ProjectId", "RoleId");
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("UserId", "ProjectId");
 
                     b.HasIndex("ProjectId");
 

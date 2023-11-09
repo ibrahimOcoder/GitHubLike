@@ -18,9 +18,6 @@ namespace GitHubLike.Modules.Common.Services
         private readonly ApplicationDbContext _dbContext;
         private const string UserOwner = "User";
         private const string OrganizationOwner = "Organization";
-        private const string OrganizationOwnerRole = "Owner";
-        private const string OrganizationAdminRole = "Admin";
-        private const string OrganizationMemberRole = "Member";
         private const int UserRolesCount = 2;
         private const int UserProjectsCount = 4;
         private const int SharedProjectsCount = UserProjectsCount - 2;

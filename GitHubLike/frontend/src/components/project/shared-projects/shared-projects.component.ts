@@ -30,11 +30,11 @@ export class SharedProjectsComponent {
     );
   }
 
-  rejectInvitation(projectId: number) {
+  updateInvitation(projectId: number, accepted: boolean) {
     const rejectInvitation: ProjectUserUpdateDto = {
       projectId: projectId,
       userId: 1,
-      acceptedInvite: false,
+      acceptedInvite: accepted,
     };
 
     this.state.hold(

@@ -24,8 +24,6 @@ export class OrganizationsComponent {
       'organizations',
       this.organizationsApiService.getOrganizations(1),
       (_, organizations) => {
-        console.log(organizations);
-
         return organizations;
       },
     );

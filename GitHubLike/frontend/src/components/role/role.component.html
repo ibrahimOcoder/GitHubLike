@@ -1,24 +1,6 @@
 <nb-layout>
   <nb-layout-column>
     <nb-card>
-      <nb-card-body class="example-items-rows">
-        Role Name:
-        <input #roleName type="text" nbInput placeholder="Enter Role Name" />
-      </nb-card-body>
-      <nb-card-body class="example-items-rows">
-        Permissions:
-        <nb-select #permissions multiple placeholder="Permissions">
-          <nb-option value="1">Create</nb-option>
-          <nb-option value="2">Retrieve</nb-option>
-          <nb-option value="4">Update</nb-option>
-          <nb-option value="8">Delete</nb-option>
-        </nb-select>
-      </nb-card-body>
-      <nb-card-body class="example-items-rows">
-        <button nbButton status="primary">Save</button>
-      </nb-card-body>
-    </nb-card>
-    <nb-card>
       <nb-card-body>
         <ng-container *ngLet="state$ | async; let userRoles">
           <div *ngFor="let userRole of userRoles" class="listDiv">

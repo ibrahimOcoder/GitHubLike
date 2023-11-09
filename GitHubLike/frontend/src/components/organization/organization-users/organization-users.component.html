@@ -23,6 +23,7 @@
                 nbButton
                 status="success"
                 class="btn"
+                (click)="patchOrganizationUser(user.userId, user.userRole)"
               >
                 Promote
               </button>
@@ -32,6 +33,7 @@
                 nbButton
                 status="danger"
                 class="btn"
+                (click)="patchOrganizationUser(user.userId, user.userRole)"
               >
                 Demote
               </button>

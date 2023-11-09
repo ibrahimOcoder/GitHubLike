@@ -5,9 +5,9 @@
     [routerLink]="['/orgDetail', organization.organization.organizationId]"
   >
     <app-list
-      [mainTitle]="organization?.organization?.organizationName"
-      [createdBy]="organization?.userName"
-      [extraText]="organization?.organization?.createdAt"
+      [mainTitle]="'Organization Name: ' + organization?.organization?.organizationName"
+      [createdBy]="'Created By: ' + organization?.userName"
+      [extraText]="'Created At: ' + organization?.organization?.createdAt"
       [greyedOut]="organization?.inviteAccepted"
     ></app-list>
   </div>

@@ -6,7 +6,7 @@ using GitHubLike.Modules.Common.Entity;
 namespace GitHubLike.Modules.OrganizationModule.Entity
 {
     [Table("OrganizationModule_OrganizationUsers")]
-    [PrimaryKey(nameof(UserId), nameof(OrganizationId), nameof(OrgRoleId))]
+    [PrimaryKey(nameof(UserId), nameof(OrganizationId))]
     public class OrganizationUsers : IEntityBase
     {
         public long UserId { get; set; }

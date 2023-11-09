@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GitHubLike.Modules.ProjectModule.Entity
 {
     [Table("ProjectModule_ProjectUsers")]
-    [PrimaryKey(nameof(UserId), nameof(ProjectId), nameof(RoleId))]
+    [PrimaryKey(nameof(UserId), nameof(ProjectId))]
     public class ProjectUsers : IEntityBase
     {
         public long UserId { get; set; }

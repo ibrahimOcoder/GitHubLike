@@ -7,6 +7,7 @@ import {
   Member,
   Owner,
 } from 'src/models/organizations/OrganizationRolesConstants';
+import { OrganizationUserUpdateDto } from 'src/models/organizations/OrganizationUserPatchDto';
 import { OrganizationDetailsApiService } from './organization-users.api.service';
 
 interface State {
@@ -41,6 +42,25 @@ export class OrganizationUsersComponent {
       ),
       (_, data) => {
         return data;
+      },
+    );
+  }
+
+  patchOrganizationUser(userId: number, roleName: string) {
+    const patchUserDto: OrganizationUserUpdateDto = {
+      userId,
+      roleName,
+      organizationId: this.organizationId,
+    };
+
+    this.state.hold(
+      this.organizationDetailsApi.patchOrganizationUser(patchUserDto),
+      (resp) => {
+        if (resp) {
+          const organizationUsers = { ...this.state.get('organizationUsers') };
+          organizationUsers.organizationUsersList = resp.organizationUsersList;
+          this.state.set({ organizationUsers: organizationUsers });
+        }
       },
     );
   }

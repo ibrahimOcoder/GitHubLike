@@ -8,8 +8,20 @@
     >
       <button
         nbButton
+        class="btn"
+        *ngIf="sharedProject?.inviteAccepted === null"
+        status="primary"
+        (click)="updateInvitation(sharedProject.project.projectId, true)"
+      >
+        Accept Invitation
+      </button>
+
+      <button
+        nbButton
+        class="btn"
+        *ngIf="sharedProject?.inviteAccepted === null"
         status="danger"
-        (click)="rejectInvitation(sharedProject.project.projectId)"
+        (click)="updateInvitation(sharedProject.project.projectId, false)"
       >
         Reject Invitation
       </button>

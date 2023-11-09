@@ -39,7 +39,7 @@ namespace GitHubLike.Modules.OrganizationModule.Services
                 .AnyAsync(o =>
                 o.OrganizationId == organizationId
                 && o.UserId == userId
-                && o.OrganizationRole.OrganizationRoleName == ((OrganizationModule.Types.OrganizationRoles)1).ToString());
+                && o.OrganizationRole.OrganizationRoleName == ((Types.OrganizationRoles)1).ToString());
 
             var organizationUsers = _organizationUsersRepository.Query().Where(o => o.OrganizationId == organizationId)
                 .Include(o => o.User)
@@ -52,7 +52,7 @@ namespace GitHubLike.Modules.OrganizationModule.Services
                     UserRole = s.OrganizationRole.OrganizationRoleName
                 });
 
-            organizationDetails.OrganizationUsersList = organizationUsers.ToList();
+            organizationDetails.OrganizationUsersList = organizationUsers.OrderBy(x => x.UserId).ToList();
 
             return organizationDetails;
         }
