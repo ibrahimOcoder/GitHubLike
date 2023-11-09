@@ -66,15 +66,15 @@ namespace GitHubLike.Modules.Common.Services
             {
                 new()
                 {
-                    OrganizationRoleName = OrganizationOwnerRole
+                    OrganizationRoleName = ((OrganizationModule.Types.OrganizationRoles)1).ToString()
                 },
                 new()
                 {
-                    OrganizationRoleName = OrganizationAdminRole
+                    OrganizationRoleName = ((OrganizationModule.Types.OrganizationRoles)2).ToString()
                 },
                 new()
                 {
-                    OrganizationRoleName = OrganizationMemberRole
+                    OrganizationRoleName = ((OrganizationModule.Types.OrganizationRoles)3).ToString()
                 }
             };
 

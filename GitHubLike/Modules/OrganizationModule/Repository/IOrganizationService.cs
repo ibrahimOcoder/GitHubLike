@@ -7,6 +7,8 @@ namespace GitHubLike.Modules.OrganizationModule.Repository
     {
         Task<Organizations> GetOrganization(long organizationId);
 
+        Task<OrganizationDetailViewDto> GetOrganizationDetail(long organizationId, long userId);
+
         Task<List<OrganizationUserInvitationsViewDto>> GetOrganizationUserInvitations(long userId);
 
         Task<int> AddOrganization(Organizations organization);

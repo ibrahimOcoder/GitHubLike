@@ -22,8 +22,7 @@ export class DetailGuard implements CanActivate {
     | UrlTree {
     const id = Number(route.paramMap.get('id'));
     if (isNaN(id) || id < 1) {
-      alert('Invalid product id');
-      this.router.navigate(['/detail']);
+      this.router.navigate(['/orgDetail']);
       return false;
     }
     return true;

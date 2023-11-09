@@ -1,5 +1,9 @@
 <ng-container *ngLet="state$ | async; let organizations">
-  <div *ngFor="let organization of organizations" class="listDiv">
+  <div
+    *ngFor="let organization of organizations"
+    class="listDiv"
+    [routerLink]="['/orgDetail', organization.organization.organizationId]"
+  >
     <app-list
       [mainTitle]="organization?.organization?.organizationName"
       [createdBy]="organization?.userName"

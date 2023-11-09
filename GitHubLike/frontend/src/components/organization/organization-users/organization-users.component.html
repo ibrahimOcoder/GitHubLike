@@ -1,0 +1,54 @@
+<ng-container *ngLet="state$ | async; let organization">
+  <nb-layout>
+    <nb-layout-column>
+      <nb-card>
+        <nb-card-body class="example-items-rows">
+          Organization Name: {{ organization?.organizationName }}
+        </nb-card-body>
+        <nb-card-body class="example-items-rows">
+          Created On: {{ organization?.createdOn }}
+        </nb-card-body>
+        <nb-card-body class="example-items-rows">
+          Assigned Users:
+          <div
+            *ngFor="let user of organization?.organizationUsersList"
+            class="listDiv"
+          >
+            <app-list [mainTitle]="user.userName" [extraText]="user.userRole">
+              <button
+                *ngIf="
+                  user.userRole == memberRole &&
+                  (organization?.isAdmin || organization?.isOwner)
+                "
+                nbButton
+                status="success"
+                class="btn"
+              >
+                Promote
+              </button>
+
+              <button
+                *ngIf="user.userRole == adminRole && organization?.isOwner"
+                nbButton
+                status="danger"
+                class="btn"
+              >
+                Demote
+              </button>
+
+              <button
+                *ngIf="organization?.isOwner"
+                nbButton
+                status="danger"
+                class="btn"
+                (click)="removeUser(user.userId)"
+              >
+                Remove User
+              </button>
+            </app-list>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-layout-column>
+  </nb-layout>
+</ng-container>

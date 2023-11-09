@@ -12,12 +12,14 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
     public class OrganizationUserController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IOrganizationService _organizationService;
         private readonly IOrganizationUserService _organizationUserService;
 
-        public OrganizationUserController(IMapper mapper, IOrganizationUserService organizationUserService)
+        public OrganizationUserController(IMapper mapper, IOrganizationUserService organizationUserService, IOrganizationService organizationService)
         {
             _mapper = mapper;
             _organizationUserService = organizationUserService;
+            _organizationService = organizationService;
         }
 
         [HttpPost]
@@ -69,7 +71,7 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
             return Conflict();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -91,7 +93,9 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
 
             if (delete > 0)
             {
-                return Ok();
+                var organizationUsers =
+                    await _organizationService.GetOrganizationDetail(deleteDto.OrganizationId, deleteDto.UserId);
+                return Ok(organizationUsers);
             }
 
             return Conflict();

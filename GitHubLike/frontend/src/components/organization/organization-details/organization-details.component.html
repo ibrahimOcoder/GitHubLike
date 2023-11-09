@@ -1,1 +1,12 @@
-<p>organization-details works!</p>
+<div class="nb-theme-default">
+  <section>
+    <nb-tabset>
+      <nb-tab tabTitle="User Management">
+        <app-organization-users
+          [organizationId]="organizationId"
+        ></app-organization-users>
+      </nb-tab>
+      <nb-tab tabTitle="My Projects"> </nb-tab>
+    </nb-tabset>
+  </section>
+</div>

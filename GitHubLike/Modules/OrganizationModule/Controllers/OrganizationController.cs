@@ -44,5 +44,27 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
 
             return Ok(organizations);
         }
+
+        [HttpGet("/{id}/{userId}")]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(OrganizationDetailViewDto))]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public async Task<ActionResult> GetOrganizationDetail([FromQuery] long id, [FromQuery] long userId)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var organizations = await _organizationService.GetOrganizationDetail(id, userId);
+
+            if (organizations == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(organizations);
+        }
     }
 }

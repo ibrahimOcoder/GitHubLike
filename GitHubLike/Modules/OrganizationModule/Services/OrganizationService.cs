@@ -26,6 +26,37 @@ namespace GitHubLike.Modules.OrganizationModule.Services
                 .FirstOrDefaultAsync(p => p.Id == organizationId);
         }
 
+        public async Task<OrganizationDetailViewDto> GetOrganizationDetail(long organizationId, long userId)
+        {
+            var organizationDetails = new OrganizationDetailViewDto();
+
+            var organization = await _organizationRepository.Query().FirstOrDefaultAsync(o => o.Id == organizationId);
+            organizationDetails.CreatedOn = DateOnly.FromDateTime(organization.CreatedAt.DateTime);
+            organizationDetails.OrganizationName = organization.OrganizationName;
+            organizationDetails.IsOwner = organization.OwnerUserId == userId;
+            organizationDetails.IsAdmin = await _organizationUsersRepository.Query()
+                .Include(o=>o.OrganizationRole)
+                .AnyAsync(o =>
+                o.OrganizationId == organizationId
+                && o.UserId == userId
+                && o.OrganizationRole.OrganizationRoleName == ((OrganizationModule.Types.OrganizationRoles)1).ToString());
+
+            var organizationUsers = _organizationUsersRepository.Query().Where(o => o.OrganizationId == organizationId)
+                .Include(o => o.User)
+                .Include(p => p.OrganizationRole)
+                .Select
+                (s => new OrganizationUserDetailViewDto
+                {
+                    UserId = s.UserId,
+                    UserName = s.User.UserName,
+                    UserRole = s.OrganizationRole.OrganizationRoleName
+                });
+
+            organizationDetails.OrganizationUsersList = organizationUsers.ToList();
+
+            return organizationDetails;
+        }
+
         public async Task<List<OrganizationUserInvitationsViewDto>> GetOrganizationUserInvitations(long userId)
         {
             var sharedOrganizations = _organizationRepository.Query()

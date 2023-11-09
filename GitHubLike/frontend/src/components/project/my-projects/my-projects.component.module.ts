@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgLetModule } from 'ng-let';
-import { DetailGuard } from 'src/components/detail-guard';
 import { ListComponentModule } from 'src/components/list/list.component.module';
+import { DetailGuard } from 'src/components/project/detail-guard';
 import { ProjectDetailsComponent } from '../project-details/project-details.component';
 import { MyProjectsComponent } from './my-projects.component';
 
