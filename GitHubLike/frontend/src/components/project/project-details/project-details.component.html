@@ -1,1 +1,28 @@
-<p>project-details works!</p>
+<ng-container *ngLet="state$ | async; let myProject">
+  <nb-layout>
+    <nb-layout-column>
+      <nb-card>
+        <nb-card-body class="example-items-rows">
+          Project Name: {{ myProject?.projectName }}
+        </nb-card-body>
+        <nb-card-body class="example-items-rows">
+          Created On: {{ myProject?.createdOn }}
+        </nb-card-body>
+        <nb-card-body class="example-items-rows">
+          Assigned Users:
+          <div *ngFor="let user of myProject?.projectUsersList" class="listDiv">
+            <app-list [mainTitle]="user.userName">
+              <button
+                nbButton
+                status="danger"
+                (click)="removeUser(user.userId)"
+              >
+                Remove User
+              </button>
+            </app-list>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-layout-column>
+  </nb-layout>
+</ng-container>

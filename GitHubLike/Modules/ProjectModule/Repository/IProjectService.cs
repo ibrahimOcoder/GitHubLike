@@ -18,6 +18,8 @@ namespace GitHubLike.Modules.ProjectModule.Repository
         // Get Projects by Organization & User
         Task<IQueryable<ProjectViewDto>> GetProjectsByOrganizationandUser(long organizationId, long userId);
 
+        Task<ProjectDetailViewDto> GetProjectDetails(long projectId);
+
         Task<int> UpdateProject(Projects Project);
 
         Task<int> DeleteProject(Projects Project);

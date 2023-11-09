@@ -1,8 +1,13 @@
 <ng-container *ngLet="state$ | async; let myProjects">
-  <div *ngFor="let myProject of myProjects" class="listDiv">
+  <div
+    *ngFor="let myProject of myProjects"
+    class="listDiv"
+    [routerLink]="['/detail', myProject.projectId]"
+  >
     <app-list
       [mainTitle]="myProject.projectName"
       [extraText]="myProject.createdAt"
     ></app-list>
   </div>
 </ng-container>
+<router-outlet></router-outlet>

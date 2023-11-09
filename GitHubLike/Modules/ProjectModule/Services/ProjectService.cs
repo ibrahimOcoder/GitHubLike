@@ -62,6 +62,28 @@ namespace GitHubLike.Modules.ProjectModule.Services
             throw new NotImplementedException();
         }
 
+        public async Task<ProjectDetailViewDto> GetProjectDetails(long projectId)
+        {
+            var projectDetails = new ProjectDetailViewDto();
+
+            var project = await _projectRepository.Query().FirstOrDefaultAsync(p => p.Id == projectId);
+            projectDetails.CreatedOn = DateOnly.FromDateTime(project.CreatedAt.DateTime);
+            projectDetails.ProjectName = project.ProjectName;
+
+            var projectUsers = _projectUsersRepository.Query().Where(p => p.ProjectId == projectId)
+                .Include(p => p.Users)
+                .Select
+                (s => new ProjectUserDetailViewDto
+                {
+                    UserId = s.UserId,
+                    UserName = s.Users.UserName
+                });
+
+            projectDetails.ProjectUsersList = projectUsers.ToList();
+
+            return projectDetails;
+        }
+
         public async Task<int> UpdateProject(Projects project)
         {
             _projectRepository.Update(project);

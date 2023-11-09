@@ -13,11 +13,13 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
     public class ProjectUsersController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IProjectService _projectService;
         private readonly IProjectUsersService _projectUsersService;
 
-        public ProjectUsersController(IMapper mapper, IProjectUsersService projectUsersService)
+        public ProjectUsersController(IMapper mapper, IProjectUsersService projectUsersService, IProjectService projectService)
         {
             _mapper = mapper;
+            _projectService = projectService;
             _projectUsersService = projectUsersService;
         }
 
@@ -70,7 +72,7 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
             return Conflict();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -92,7 +94,8 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
 
             if (delete > 0)
             {
-                return Ok();
+                var projectUsers = _projectService.GetProjectDetails(deleteDto.ProjectId);
+                return Ok(projectUsers);
             }
 
             return Conflict();

@@ -24,7 +24,7 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ProjectViewDto))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public async Task<ActionResult> GetProjectDetails([FromBody] long projectId)
+        public async Task<ActionResult> GetProject([FromBody] long projectId)
         {
             if (projectId == 0)
             {
@@ -80,6 +80,28 @@ namespace GitHubLike.Modules.ProjectModule.Controllers
             }
 
             var projects = await _projectService.GetProjectsByOwnerWithInvitations(id);
+
+            if (projects == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(projects);
+        }
+
+        [HttpGet("GetProjectDetails")]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(IQueryable<ProjectDetailViewDto>))]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public async Task<ActionResult> GetProjectDetails([FromQuery] long id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var projects = await _projectService.GetProjectDetails(id);
 
             if (projects == null)
             {
