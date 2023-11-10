@@ -1,14 +1,17 @@
 <nb-layout>
   <nb-layout-column>
     <nb-card [ngClass]="{ greyed: greyedOut === null }">
-      <nb-card-body class="example-items-rows">
+      <nb-card-body class="example-items-rows" *ngIf="mainTitle">
         {{ mainTitle }}
       </nb-card-body>
-      <nb-card-body class="example-items-rows">
+      <nb-card-body class="example-items-rows" *ngIf="createdBy">
         {{ createdBy }}
       </nb-card-body>
-      <nb-card-body class="example-items-rows">
+      <nb-card-body class="example-items-rows" *ngIf="extraText">
         {{ extraText }}
+      </nb-card-body>
+      <nb-card-body class="example-items-rows" *ngIf="users">
+        {{ users }}
       </nb-card-body>
       <nb-card-body class="example-items-rows">
         <ng-content></ng-content>

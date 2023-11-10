@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { DeleteOrganizationUserDto } from 'src/models/organizations/DeleteOrganizationUserDto';
 import { OrganizationDetailsViewDto } from 'src/models/organizations/OrganizationDetailViewDto';
@@ -20,7 +20,7 @@ interface State {
   styleUrls: ['./organization-users.component.scss'],
   providers: [RxState, OrganizationDetailsApiService],
 })
-export class OrganizationUsersComponent {
+export class OrganizationUsersComponent implements OnInit {
   state$ = this.state.select('organizationUsers');
   @Input() organizationId!: number;
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { ToPermissionValues } from 'src/models/permissions';
 import { RoleViewDto } from 'src/models/role/RoleViewDto';
+import { LoginResponseDto } from 'src/models/user/LoginDto';
 import { RoleComponentService } from './role.component.service';
 
 export interface State {
@@ -20,12 +21,19 @@ export class RoleComponent {
     private roleService: RoleComponentService,
     private state: RxState<State>,
   ) {
-    this.state.connect('userRoles', this.roleService.getRoles(1), (_, data) => {
-      const userRoles = [...data];
-      userRoles.map((userRole) => {
-        userRole.permissionsLabels = ToPermissionValues(userRole.permissions);
-      });
-      return userRoles;
-    });
+    const currentUser = JSON.parse(
+      localStorage.getItem('currentUser')!,
+    ) as LoginResponseDto;
+    this.state.connect(
+      'userRoles',
+      this.roleService.getRoles(currentUser.userId),
+      (_, data) => {
+        const userRoles = [...data];
+        userRoles.map((userRole) => {
+          userRole.permissionsLabels = ToPermissionValues(userRole.permissions);
+        });
+        return userRoles;
+      },
+    );
   }
 }

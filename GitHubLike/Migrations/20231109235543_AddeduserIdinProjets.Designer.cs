@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GitHubLike.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231109201850_Seeding")]
-    partial class Seeding
+    [Migration("20231109235543_AddeduserIdinProjets")]
+    partial class AddeduserIdinProjets
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,6 +163,9 @@ namespace GitHubLike.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("CreatedByUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("int");

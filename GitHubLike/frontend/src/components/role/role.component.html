@@ -5,8 +5,8 @@
         <ng-container *ngLet="state$ | async; let userRoles">
           <div *ngFor="let userRole of userRoles" class="listDiv">
             <app-list
-              [mainTitle]="userRole.roleName"
-              [extraText]="userRole.permissionsLabels"
+              [mainTitle]="'Role Name: ' + userRole.roleName"
+              [extraText]="'Permissions: ' + userRole.permissionsLabels"
             ></app-list>
           </div>
         </ng-container>

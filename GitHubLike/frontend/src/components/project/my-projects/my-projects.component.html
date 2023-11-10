@@ -5,8 +5,8 @@
     [routerLink]="['/detail', myProject.projectId]"
   >
     <app-list
-      [mainTitle]="myProject.projectName"
-      [extraText]="myProject.createdAt"
+      [mainTitle]="'Project Name: ' + myProject.projectName"
+      [extraText]="'Created At: ' + myProject.createdAt"
     ></app-list>
   </div>
 </ng-container>

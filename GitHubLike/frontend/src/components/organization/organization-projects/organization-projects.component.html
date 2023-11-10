@@ -1,1 +1,15 @@
-<p>organization-projects works!</p>
+<ng-container *ngLet="state$ | async; let orgProjects">
+  <div
+    *ngFor="let project of orgProjects"
+    class="listDiv"
+    [routerLink]="['/detail', project.projectId]"
+  >
+    <app-list
+      [mainTitle]="'Project Name: ' + project.projectName"
+      [extraText]="'Created At: ' + project.createdOn"
+      [createdBy]="'Project Creator: ' + project.createdBy"
+      [users]="'Project Users: ' + project.orgProjectUsers"
+    ></app-list>
+  </div>
+</ng-container>
+<router-outlet></router-outlet>

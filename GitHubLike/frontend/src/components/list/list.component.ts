@@ -10,5 +10,6 @@ export class ListComponent {
   @Input() mainTitle?: string;
   @Input() createdBy?: string;
   @Input() extraText?: unknown | unknown[];
+  @Input() users?: string;
   @Input() greyedOut?: boolean = false;
 }

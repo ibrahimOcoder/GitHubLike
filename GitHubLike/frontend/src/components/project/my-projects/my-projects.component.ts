@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { MyProjectsViewDto } from 'src/models/projects/myprojects/MyProjectsViewDto';
+import { LoginResponseDto } from 'src/models/user/LoginDto';
 import { MyProjectsApiService } from './my-projects.api.service';
 
 export interface State {
@@ -20,9 +21,12 @@ export class MyProjectsComponent {
     private state: RxState<State>,
     private myProjectsService: MyProjectsApiService,
   ) {
+    const currentUser = JSON.parse(
+      localStorage.getItem('currentUser')!,
+    ) as LoginResponseDto;
     this.state.connect(
       'myProjects',
-      this.myProjectsService.getMyProjects(1),
+      this.myProjectsService.getMyProjects(currentUser.userId),
       (_, myProjects) => {
         return myProjects;
       },

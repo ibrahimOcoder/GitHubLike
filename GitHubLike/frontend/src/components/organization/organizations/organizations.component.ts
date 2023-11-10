@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { SharedOrganizationsViewDto } from 'src/models/organizations/SharedOrganizationsViewDto';
+import { LoginResponseDto } from 'src/models/user/LoginDto';
 import { OrganizationsApiService } from './organizations.component.api.service';
 
 export interface State {
@@ -20,9 +21,12 @@ export class OrganizationsComponent {
     private state: RxState<State>,
     private organizationsApiService: OrganizationsApiService,
   ) {
+    const currentUser = JSON.parse(
+      localStorage.getItem('currentUser')!,
+    ) as LoginResponseDto;
     this.state.connect(
       'organizations',
-      this.organizationsApiService.getOrganizations(1),
+      this.organizationsApiService.getOrganizations(currentUser.userId),
       (_, organizations) => {
         return organizations;
       },

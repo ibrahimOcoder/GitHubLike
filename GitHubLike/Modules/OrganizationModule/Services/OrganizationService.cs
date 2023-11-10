@@ -2,6 +2,8 @@
 using GitHubLike.Modules.OrganizationModule.Entity;
 using GitHubLike.Modules.OrganizationModule.Models;
 using GitHubLike.Modules.OrganizationModule.Repository;
+using GitHubLike.Modules.ProjectModule.Entity;
+using GitHubLike.Modules.ProjectModule.Models;
 using GitHubLike.Modules.UserModule.Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +14,20 @@ namespace GitHubLike.Modules.OrganizationModule.Services
         private readonly IRepository<Organizations> _organizationRepository;
         private readonly IRepository<OrganizationUsers> _organizationUsersRepository;
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Projects> _projectRepository;
+        private readonly IRepository<ProjectUsers> _projectUserRepository;
 
-        public OrganizationService(IRepository<Organizations> organizationRepository, IRepository<OrganizationUsers> organizationUsersRepository, IRepository<User> userRepository)
+        public OrganizationService(IRepository<Organizations> organizationRepository, 
+            IRepository<OrganizationUsers> organizationUsersRepository, 
+            IRepository<User> userRepository, 
+            IRepository<Projects> projectRepository, 
+            IRepository<ProjectUsers> projectUserRepository)
         {
             _organizationRepository = organizationRepository;
             _organizationUsersRepository = organizationUsersRepository;
             _userRepository = userRepository;
+            _projectRepository = projectRepository;
+            _projectUserRepository = projectUserRepository;
         }
 
         public async Task<Organizations> GetOrganization(long organizationId)
@@ -35,7 +45,7 @@ namespace GitHubLike.Modules.OrganizationModule.Services
             organizationDetails.OrganizationName = organization.OrganizationName;
             organizationDetails.IsOwner = organization.OwnerUserId == userId;
             organizationDetails.IsAdmin = await _organizationUsersRepository.Query()
-                .Include(o=>o.OrganizationRole)
+                .Include(o => o.OrganizationRole)
                 .AnyAsync(o =>
                 o.OrganizationId == organizationId
                 && o.UserId == userId
@@ -64,7 +74,7 @@ namespace GitHubLike.Modules.OrganizationModule.Services
                     organizations => organizations.Id,
                     organizationUsers => organizationUsers.OrganizationId,
                     (organizations, organizationUsers) => new { organizations, organizationUsers })
-                .Join(_userRepository.Query(), 
+                .Join(_userRepository.Query(),
                     combined => combined.organizations.OwnerUserId, user => user.Id,
                     (combined, user) => new OrganizationUserInvitationsViewDto
                     {
@@ -95,10 +105,81 @@ namespace GitHubLike.Modules.OrganizationModule.Services
             return sharedOrganizations;
         }
 
+        public async Task<List<OrganizationProjectsViewDto>> GetOrganizationProjects(long organizationId, long userId)
+        {
+            var organization = await _organizationRepository.Query().FirstOrDefaultAsync(o => o.Id == organizationId);
+            var organizationProjectDetails = new List<OrganizationProjectsViewDto>();
+            var organizationUser = await _organizationUsersRepository.Query()
+                .FirstOrDefaultAsync(o => o.OrganizationId == organizationId && o.UserId == userId);
+
+            if (organizationUser == null && organization.OwnerUserId != userId)
+            {
+                return null;
+            }
+
+            if (organization.OwnerUserId == userId || (organizationUser != null && organizationUser.OrgRoleId == 2)) // Owner or Admin
+            {
+                var organizationProjects = _projectRepository.Query()
+                    .Where(p => p.OwnerTypeId == 2 && p.OwnerId == organizationId).AsNoTracking();
+
+                foreach (var organizationProject in organizationProjects)
+                {
+
+                    organizationProjectDetails.Add(new()
+                    {
+                        CreatedBy = _userRepository.Query().FirstOrDefault(u => u.Id == organizationProject.CreatedByUserId).UserName,
+                        CreatedOn = DateOnly.FromDateTime(organizationProject.CreatedAt.DateTime),
+                        ProjectId = organizationProject.Id,
+                        ProjectName = organizationProject.ProjectName,
+                        OrganizationProjectUsers = await GetUserProjects(organizationProject.Id)
+                    });
+                }
+            }
+
+            else // Member
+            {
+                var organizationProjects = _projectRepository.Query()
+                    .Where(p => p.OwnerTypeId == 2 && p.OwnerId == organizationId)
+                    .AsNoTracking()
+                    .Join(_projectUserRepository.Query().Where(p => p.UserId == userId),
+                        projects => projects.Id,
+                        projectUsers => projectUsers.ProjectId,
+                        (projects, projectUsers) => new {
+                            projects, projectUsers
+                        });
+
+                foreach (var organizationProject in organizationProjects)
+                {
+                    organizationProjectDetails.Add(new()
+                    {
+                        CreatedBy = _userRepository.Query().FirstOrDefault(u => u.Id == organizationProject.projects.CreatedByUserId).UserName,
+                        CreatedOn = DateOnly.FromDateTime(organizationProject.projects.CreatedAt.DateTime),
+                        ProjectId = organizationProject.projects.Id,
+                        ProjectName = organizationProject.projects.ProjectName,
+                        OrganizationProjectUsers = await GetUserProjects(organizationProject.projects.Id)
+                    });
+                }
+            }
+
+            return organizationProjectDetails;
+        }
+
         public async Task<int> AddOrganization(Organizations organization)
         {
             await _organizationRepository.Add(organization);
             return await _organizationRepository.SaveChanges();
+        }
+
+        private async Task<List<ProjectUserDetailViewDto>> GetUserProjects(long projectId)
+        {
+           return _projectUserRepository.Query().Where(p => p.ProjectId == projectId)
+                .Include(p => p.Users)
+                .Select
+                (s => new ProjectUserDetailViewDto
+                {
+                    UserId = s.UserId,
+                    UserName = s.Users.UserName
+                }).ToList();
         }
     }
 }

@@ -1,9 +1,9 @@
 <ng-container *ngLet="state$ | async; let sharedProjects">
   <div *ngFor="let sharedProject of sharedProjects" class="listDiv">
     <app-list
-      [mainTitle]="sharedProject?.project?.projectName"
-      [createdBy]="sharedProject?.userName"
-      [extraText]="sharedProject?.project?.createdAt"
+      [mainTitle]="'Project Name: ' + sharedProject?.project?.projectName"
+      [createdBy]="'Owner Name: ' + sharedProject?.userName"
+      [extraText]="'Created At: ' + sharedProject?.project?.createdAt"
       [greyedOut]="sharedProject?.inviteAccepted"
     >
       <button

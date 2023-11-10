@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using GitHubLike.Modules.Common.Entity;
+using GitHubLike.Modules.UserModule.Entity;
 
 namespace GitHubLike.Modules.ProjectModule.Entity
 {
@@ -17,6 +18,8 @@ namespace GitHubLike.Modules.ProjectModule.Entity
         public OwnerType OwnerTypes { get; set; }
 
         public int OwnerId { get; set; }
+
+        public long CreatedByUserId { get; set; }
 
         public ICollection<ProjectUsers> ProjectUsers { get; set; }
     }

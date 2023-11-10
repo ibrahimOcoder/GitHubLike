@@ -25,6 +25,29 @@ namespace GitHubLike.Modules.OrganizationModule.Controllers
             _organizationService = organizationService;
         }
 
+        [Route("GetOrganizationProjects")]
+        [HttpGet("{id}/{userId}")]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(List<OrganizationProjectsViewDto>))]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public async Task<ActionResult> GetOrganizationProjects([FromQuery] long id, [FromQuery] long userId)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var organizations = await _organizationService.GetOrganizationProjects(id, userId);
+
+            if (organizations == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(organizations);
+        }
+
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

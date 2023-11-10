@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { ProjectUserUpdateDto } from 'src/models/projects/sharedprojects/SharedProjectsPatchDto';
 import { SharedProjectsViewDto } from 'src/models/projects/sharedprojects/SharedProjectsViewDto';
+import { LoginResponseDto } from 'src/models/user/LoginDto';
 import { SharedProjectsApiService } from './shared-projects.api.service';
 
 export interface State {
@@ -21,9 +22,12 @@ export class SharedProjectsComponent {
     private state: RxState<State>,
     private sharedProjectsService: SharedProjectsApiService,
   ) {
+    const currentUser = JSON.parse(
+      localStorage.getItem('currentUser')!,
+    ) as LoginResponseDto;
     this.state.connect(
       'sharedProjects',
-      this.sharedProjectsService.getSharedProjects(1),
+      this.sharedProjectsService.getSharedProjects(currentUser.userId),
       (_, sharedProjects) => {
         return sharedProjects;
       },

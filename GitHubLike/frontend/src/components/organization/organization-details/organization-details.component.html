@@ -8,7 +8,11 @@
           [organizationId]="organizationId"
         ></app-organization-users>
       </nb-tab>
-      <nb-tab tabTitle="My Projects"> </nb-tab>
+      <nb-tab tabTitle="Organization Projects">
+        <app-organization-projects
+          [organizationId]="organizationId"
+        ></app-organization-projects>
+      </nb-tab>
     </nb-tabset>
   </section>
 </div>

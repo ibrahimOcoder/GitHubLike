@@ -143,6 +143,7 @@ namespace GitHubLike.Modules.Common.Services
                         OwnerId = (int)user.Id,
                         OwnerTypeId = userOwner.OwnerTypeId,
                         OwnerTypes = userOwner,
+                        CreatedByUserId = user.Id,
                         ProjectName = "Project " + i + " of User: " + user.Id
                     });
                 }
@@ -226,9 +227,6 @@ namespace GitHubLike.Modules.Common.Services
                 });
             }
 
-            _dbContext.Set<ProjectUsers>().AddRange(sharedProjects);
-            _dbContext.SaveChanges();
-
             #endregion
 
             #region Adding Shared Organizations
@@ -271,6 +269,7 @@ namespace GitHubLike.Modules.Common.Services
                         OwnerId = (int)organization.Id,
                         OwnerTypeId = organizationOwner.OwnerTypeId,
                         OwnerTypes = organizationOwner,
+                        CreatedByUserId = organization.OwnerUserId, 
                         ProjectName = "Organization " + organization.Id + " Project " + i
                     });
                 }
@@ -280,6 +279,33 @@ namespace GitHubLike.Modules.Common.Services
             _dbContext.SaveChanges();
 
             _dbContext.Set<Projects>().AddRange(organizationProjects);
+            _dbContext.SaveChanges();
+
+            sharedProjects.Add(new()
+            {
+                Projects = organizationProjects[0],
+                ProjectId = organizationProjects[0].Id,
+                UserId = organizationProjects[3].CreatedByUserId,
+                RoleId = 1
+            });
+
+            sharedProjects.Add(new()
+            {
+                Projects = organizationProjects[1],
+                ProjectId = organizationProjects[1].Id,
+                UserId = organizationProjects[2].CreatedByUserId,
+                RoleId = 1
+            });
+
+            sharedProjects.Add(new()
+            {
+                Projects = organizationProjects[2],
+                ProjectId = organizationProjects[2].Id,
+                UserId = organizationProjects[1].CreatedByUserId,
+                RoleId = 1
+            });
+
+            _dbContext.Set<ProjectUsers>().AddRange(sharedProjects);
             _dbContext.SaveChanges();
 
             #endregion
