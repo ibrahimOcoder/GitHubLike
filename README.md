@@ -16,6 +16,7 @@ The Backend has been developed on **.NET 7 Web APIs** using **EF Core** as the O
    5. The project has been broken down into **Modules** which provides more **loose coupling** along with point 2, 3 and 4.
    6. As EF Core has been used so we are not supposed to expose the Entities on the frontend via APIs. To overcome this approach, **AutoMapper** has been used which uses DTOs and mapping                  configurations to convert entities to those DTOs.
    7. For Security purpose, a basic **JWT Token Security** has been implemented. Also the passwords are saved after applying SHA-256 hashing.
+   8. For Logging, a custom middleware using **NLog** can be used that catches exceptions through out the backend.
 
 **Frontend:**
 The Frontend has been developed using **Angular 16**. Following are some key patterns/features that have been used in the project:
