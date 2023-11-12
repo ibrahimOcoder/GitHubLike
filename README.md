@@ -26,3 +26,6 @@ The Frontend has been developed using **Angular 16**. Following are some key pat
   5.  **Content Projection** for reusability, encapsulation and customization.
   6.  Integration of **Nebular** components. (See: https://akveo.github.io/nebular/docs/getting-started/what-is-nebular)
   7.  **Future:** Stories of components can be created using **Storybook**s for better understanding of UI flows. (See: https://storybook.js.org/tutorials/intro-to-storybook/angular/en/get-started/)
+ 
+ 
+ **NOTE: I have created all the APIs that were needed but some have been not implemented on the frontend**
